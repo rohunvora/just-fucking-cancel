@@ -164,7 +164,9 @@
       pointer-events: none;
     }
     .progress-step.completed:not(:last-child)::after {
-      background: var(--success);
+      background: none;
+      border-top: 2px dashed var(--accent);
+      height: 0;
     }
     .progress-dot {
       width: 24px;
@@ -189,8 +191,9 @@
       color: white;
     }
     .progress-step.completed .progress-dot {
-      background: var(--success);
-      color: white;
+      background: var(--bg);
+      border: 2px dashed var(--accent);
+      color: var(--accent);
     }
     .progress-label {
       font-size: 9px;
@@ -199,7 +202,7 @@
       letter-spacing: 0.5px;
     }
     .progress-step.active .progress-label { color: var(--accent); font-weight: 600; }
-    .progress-step.completed .progress-label { color: var(--success); }
+    .progress-step.completed .progress-label { color: var(--accent); }
 
     /* Steps */
     .step {
