@@ -82,7 +82,7 @@ You need to get this skill onto your computer.
 ### Option B: Clone with Git (if you know Git)
 
 ```bash
-git clone https://github.com/your-username/just-fucking-cancel.git
+git clone https://github.com/rohunvora/just-fucking-cancel.git
 ```
 
 ✅ **You have the skill on your computer.**
