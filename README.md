@@ -106,10 +106,4 @@ One month of Claude Pro is usually enough to clean up years of subscription bloa
 
 ---
 
-## Additional Resources
-
-- **Deploying to Vercel?** Check out our [Vercel Web Analytics guide](VERCEL_ANALYTICS.md) to add analytics to your deployed projects.
-
----
-
 **Questions?** Open an issue. **New to Claude Code?** [Start here](GETTING_STARTED.md).
