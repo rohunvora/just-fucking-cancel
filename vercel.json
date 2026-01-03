@@ -1,10 +1,6 @@
 {
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/getting-started.html",
-      "permanent": false
-    }
-  ]
+    "framework": "nextjs",
+    "buildCommand": "npm run build",
+    "installCommand": "npm install",
+    "outputDirectory": ".next"
 }
-

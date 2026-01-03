@@ -1,0 +1,17 @@
+# Private data - NEVER commit
+_private/
+*.csv
+
+# Personal audit results
+subscription-audit.html
+
+# OS files
+.DS_Store
+
+# Claude settings (except skills)
+.claude/*
+!.claude/skills/
+
+# Internal planning docs
+skill-plan.md
+.vercel

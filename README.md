@@ -1,115 +1,130 @@
-# JUST FUCKING CANCEL
+# Just Fucking Cancel
 
-How it works:
+Find all your forgotten subscriptions. Cancel them with AI.
 
-1. `Export credit card statements`
-2. `Add exported .csv's to your local folder`
-3. `Run claude, say "cancel subscriptions"`
+![Preview](public/preview.png)
 
-This Claude skill analyzes your credit card transactions, asks you about each recurring charge, and helps you cancel the ones you don't need — including automating the cancellation process in your browser.
+---
 
-![just-fucking-cancel output](cancel-preview.png)
+## Prerequisites
 
-## What is this?
+Before running this project, ensure you have the following installed:
 
-This is a **Claude Code skill** — a set of instructions that teaches Claude how to do a specific task really well. Instead of explaining what you want from scratch, you install the skill once and Claude already knows exactly how to audit your subscriptions.
+| Tool | Version | Check Command |
+|------|---------|---------------|
+| **Node.js** | 18.x or higher | `node -v` |
+| **npm** | 9.x or higher | `npm -v` |
 
-**Think of it like:** An app that runs on AI instead of your computer. You tell Claude "audit my subscriptions" and it knows exactly what to do.
+### Installing Node.js
 
-## Why this is better than a traditional app
+**Mac (using Homebrew)**:
+```bash
+brew install node
+```
 
-| Traditional subscription tracker | This skill |
-|----------------------------------|------------|
-| Flags everything as "cancel" | **Asks you** about each charge before categorizing |
-| Can't understand context | Understands "I share this with family" or "only use during tax season" |
-| One-size-fits-all report | Personalized based on YOUR answers |
-| Your data goes to their servers | **Everything stays on your computer** |
-| Fixed functionality | Claude adapts to any CSV format |
+**Windows (using installer)**:
+Download from [nodejs.org](https://nodejs.org/) and run the installer.
 
-The questions aren't a limitation — they're the product. That's when you realize "wait, I'm still paying for THAT?"
+**Linux (Ubuntu/Debian)**:
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
 
-## Quick Start
+---
 
-**Requirements:** [Claude Code](https://docs.anthropic.com/en/docs/claude-code/getting-started) + Claude Pro ($20/month)
+## Getting Started
+
+### 1. Clone the repository
 
 ```bash
-# 1. Clone this repo
 git clone https://github.com/rohunvora/just-fucking-cancel.git
 cd just-fucking-cancel
-
-# 2. Start Claude Code
-claude
-
-# 3. Tell Claude what you want
-> Audit my subscriptions
 ```
 
-Claude will ask you to drop in your bank transaction CSV, then walk you through the audit.
+### 2. Install dependencies
 
-**Never used Claude Code?** See the complete [Getting Started Guide](GETTING_STARTED.md).
-
-## What happens when you run it
-
-1. **You provide transaction data** — Export a CSV from your bank (Apple Card, Chase, etc.)
-2. **Claude identifies recurring charges** — Netflix, Spotify, that gym membership, random SaaS tools
-3. **Claude asks you questions** — "Do you use Hulu?" "When did you last open Adobe Creative Cloud?"
-4. **You answer honestly** — This is where the "oh shit, I forgot about that" moments happen
-5. **Claude generates an audit report** — Beautiful HTML with everything categorized
-6. **Claude cancels for you (optional)** — Opens Chrome and clicks through cancellation flows
-
-## The audit report
-
-Your audit includes:
-- **Cancel** — Things you confirmed you don't use
-- **Investigate** — Charges you're unsure about
-- **Keep** — Subscriptions you actually use
-
-Features:
-- ☑️ **Checkboxes** — Select items to cancel
-- 📋 **Copy button** — One click to copy your cancel list
-- 🔒 **Privacy toggle** — Blur service names before screenshotting
-- 📁 **Collapsible sections** — Clean, organized view
-
-## Browser automation (the magic part)
-
-After your audit, you can tell Claude:
-
-```
-Help me cancel the subscriptions I marked for cancellation.
+```bash
+npm install
 ```
 
-Claude will:
-- Open Chrome automatically
-- Navigate to each service's cancellation page
-- Click through the cancellation flow
-- Ask for your confirmation before final steps
-- Handle dark patterns and "are you sure?" prompts
+### 3. Run the development server
 
-You watch the whole thing happen. Intervene anytime.
+```bash
+npm run dev
+```
 
-## Privacy
+### 4. Open in browser
 
-**Your data never leaves your computer.**
-
-- Transaction CSVs stay local — never uploaded anywhere
-- The audit report is a local HTML file
-- Nothing is shared with the skill author (me)
-
-The only data that reaches Anthropic is your conversation with Claude — not your raw transaction data.
-
-## Cost
-
-- **Claude Pro**: $20/month — [sign up here](https://claude.ai)
-- **This skill**: Free
-
-One month of Claude Pro is usually enough to clean up years of subscription bloat. Then cancel Claude Pro too, if you want. (It won't try to stop you.)
+Navigate to [http://localhost:3000](http://localhost:3000)
 
 ---
 
-## Additional Resources
+## Available Scripts
 
-- **Deploying to Vercel?** Check out our [Vercel Web Analytics guide](VERCEL_ANALYTICS.md) to add analytics to your deployed projects.
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start development server with hot reload |
+| `npm run build` | Create production build |
+| `npm run start` | Start production server |
+| `npm run lint` | Run ESLint |
 
 ---
 
-**Questions?** Open an issue. **New to Claude Code?** [Start here](GETTING_STARTED.md).
+## Tech Stack
+
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
+- **Icons**: [Hugeicons](https://hugeicons.com/)
+- **Animation**: [Framer Motion](https://www.framer.com/motion/)
+- **Language**: TypeScript (Strict Mode)
+
+---
+
+## Project Structure
+
+```
+├── app/                  # Next.js App Router
+│   ├── layout.tsx        # Root layout with metadata
+│   ├── page.tsx          # Home page
+│   ├── globals.css       # Global styles
+│   ├── sitemap.ts        # Dynamic sitemap
+│   ├── robots.ts         # Robots.txt config
+│   └── manifest.ts       # PWA manifest
+├── components/
+│   ├── landing-page.tsx  # Main landing page component
+│   └── ui/               # Reusable UI components
+├── lib/
+│   └── utils.ts          # Utility functions
+├── public/               # Static assets
+└── legacy/               # Original static site (reference only)
+```
+
+---
+
+## Deployment
+
+This project is configured for **Vercel** deployment.
+
+1. Push to GitHub
+2. Import in [Vercel Dashboard](https://vercel.com/new)
+3. Vercel auto-detects Next.js and deploys
+
+The `vercel.json` and `.vercelignore` ensure the Next.js app is deployed (not the legacy folder).
+
+---
+
+## SEO & Performance
+
+- ✅ Sitemap at `/sitemap.xml`
+- ✅ Robots.txt at `/robots.txt`
+- ✅ PWA manifest
+- ✅ OpenGraph & Twitter cards
+- ✅ Optimized fonts with `next/font`
+- ✅ Static generation for all routes
+
+---
+
+## License
+
+MIT
