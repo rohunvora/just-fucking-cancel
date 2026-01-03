@@ -33,7 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
-# vercel
+# Internal planning docs
+skill-plan.md
+ENGINEERING_PLAN.md
 .vercel
 
 # typescript

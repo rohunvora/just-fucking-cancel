@@ -848,12 +848,31 @@
 </footer>
 
 <script>
+// Progress state
+let isScrolling = false;
+const progressSteps = document.querySelectorAll('.progress-step');
+
+const updateProgress = (stepNum) => {
+  progressSteps.forEach((ps, i) => {
+    ps.classList.remove('active', 'completed');
+    if (i + 1 < stepNum) ps.classList.add('completed');
+    if (i + 1 === stepNum) ps.classList.add('active');
+  });
+};
+
 // Scroll to step when clicking progress bar
 function scrollToStep(num) {
-  const step = document.getElementById('step-' + num);
-  if (step) {
-    step.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
+  // Defer everything to avoid blocking click handler
+  setTimeout(() => {
+    const step = document.getElementById('step-' + num);
+    if (step) {
+      isScrolling = true;
+      updateProgress(num);
+      const y = step.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo(0, y);
+      setTimeout(() => { isScrolling = false; }, 100);
+    }
+  }, 0);
 }
 
 // Tab switching
@@ -913,17 +932,13 @@ document.querySelectorAll('pre code').forEach(block => {
 
 // Progress stepper - highlight current step based on scroll
 const steps = document.querySelectorAll('.step');
-const progressSteps = document.querySelectorAll('.progress-step');
 
 const observer = new IntersectionObserver(entries => {
+  if (isScrolling) return;
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       const stepNum = parseInt(entry.target.dataset.step);
-      progressSteps.forEach((ps, i) => {
-        ps.classList.remove('active', 'completed');
-        if (i + 1 < stepNum) ps.classList.add('completed');
-        if (i + 1 === stepNum) ps.classList.add('active');
-      });
+      updateProgress(stepNum);
     }
   });
 }, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });

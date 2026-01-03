@@ -1,0 +1,271 @@
+{
+  "meta": {
+    "lastUpdated": "2026-01-02",
+    "sources": [
+      "https://aionx.co/ai-comparisons/ai-pricing-comparison/",
+      "https://www.saaspricepulse.com/blog/top-ai-tools-pricing-comparison-2025",
+      "https://www.tomsguide.com/entertainment/streaming/what-streaming-costs-in-2025",
+      "https://getdx.com/blog/ai-coding-assistant-pricing/",
+      "https://www.saaspricepulse.com/tools/notion"
+    ],
+    "notes": "Max/Pro tier pricing. Monthly rates unless noted."
+  },
+  "categories": {
+    "ai_assistants": {
+      "label": "AI Assistants",
+      "icon": "🤖",
+      "items": [
+        { "name": "ChatGPT Pro", "price": 200, "tier": "Pro" },
+        { "name": "ChatGPT Plus", "price": 20, "tier": "Plus" },
+        { "name": "Claude Max", "price": 200, "tier": "Max" },
+        { "name": "Claude Pro", "price": 20, "tier": "Pro" },
+        { "name": "Gemini Ultra", "price": 35, "tier": "Ultra" },
+        { "name": "Gemini Advanced", "price": 20, "tier": "Advanced" },
+        { "name": "Grok SuperGrok Heavy", "price": 300, "tier": "Heavy" },
+        { "name": "Grok Premium", "price": 40, "tier": "Premium" },
+        { "name": "Perplexity Max", "price": 200, "tier": "Max" },
+        { "name": "Perplexity Pro", "price": 20, "tier": "Pro" },
+        { "name": "Microsoft Copilot Pro", "price": 20, "tier": "Pro" }
+      ]
+    },
+    "ai_image_video": {
+      "label": "AI Image & Video",
+      "icon": "🎨",
+      "items": [
+        { "name": "Midjourney Mega", "price": 120, "tier": "Mega" },
+        { "name": "Midjourney Pro", "price": 60, "tier": "Pro" },
+        { "name": "Midjourney Standard", "price": 30, "tier": "Standard" },
+        { "name": "Runway Pro", "price": 35, "tier": "Pro" },
+        { "name": "Runway Standard", "price": 15, "tier": "Standard" },
+        { "name": "ElevenLabs Creator", "price": 22, "tier": "Creator" },
+        { "name": "Suno Pro", "price": 10, "tier": "Pro" },
+        { "name": "Adobe Firefly", "price": 5, "tier": "Premium" }
+      ]
+    },
+    "ai_coding": {
+      "label": "AI Coding",
+      "icon": "💻",
+      "items": [
+        { "name": "Cursor Ultra", "price": 200, "tier": "Ultra" },
+        { "name": "Cursor Pro", "price": 20, "tier": "Pro" },
+        { "name": "GitHub Copilot Pro+", "price": 39, "tier": "Pro+" },
+        { "name": "GitHub Copilot Pro", "price": 10, "tier": "Pro" },
+        { "name": "Replit Pro", "price": 20, "tier": "Pro" },
+        { "name": "v0 Pro", "price": 20, "tier": "Pro" },
+        { "name": "Windsurf Pro", "price": 15, "tier": "Pro" },
+        { "name": "Tabnine Pro", "price": 12, "tier": "Pro" }
+      ]
+    },
+    "productivity": {
+      "label": "Productivity",
+      "icon": "📝",
+      "items": [
+        { "name": "Notion Business", "price": 24, "tier": "Business", "note": "per user" },
+        { "name": "Notion AI", "price": 10, "tier": "Add-on", "note": "per user" },
+        { "name": "Slack Business+", "price": 18, "tier": "Business+", "note": "per user" },
+        { "name": "Linear Business", "price": 16, "tier": "Business", "note": "per user" },
+        { "name": "Asana Business", "price": 25, "tier": "Business", "note": "per user" },
+        { "name": "Monday Pro", "price": 19, "tier": "Pro", "note": "per user" },
+        { "name": "Todoist Business", "price": 8, "tier": "Business", "note": "per user" },
+        { "name": "Cron Pro", "price": 9, "tier": "Pro" },
+        { "name": "Superhuman", "price": 30, "tier": "Pro" },
+        { "name": "Raycast Pro", "price": 10, "tier": "Pro" }
+      ]
+    },
+    "design": {
+      "label": "Design",
+      "icon": "🎭",
+      "items": [
+        { "name": "Adobe Creative Cloud Pro", "price": 60, "tier": "Pro" },
+        { "name": "Figma Organization", "price": 55, "tier": "Organization", "note": "per user" },
+        { "name": "Figma Professional", "price": 16, "tier": "Professional", "note": "per user" },
+        { "name": "Canva Pro", "price": 15, "tier": "Pro" },
+        { "name": "Framer Pro", "price": 30, "tier": "Pro" },
+        { "name": "Webflow Business", "price": 39, "tier": "Business" },
+        { "name": "Sketch", "price": 12, "tier": "Standard" },
+        { "name": "Loom Business", "price": 15, "tier": "Business", "note": "per user" }
+      ]
+    },
+    "dev_infrastructure": {
+      "label": "Dev Infrastructure",
+      "icon": "🔧",
+      "items": [
+        { "name": "Vercel Pro", "price": 20, "tier": "Pro", "note": "per user" },
+        { "name": "Netlify Pro", "price": 19, "tier": "Pro", "note": "per user" },
+        { "name": "Railway Pro", "price": 20, "tier": "Pro" },
+        { "name": "Supabase Pro", "price": 25, "tier": "Pro" },
+        { "name": "PlanetScale Scaler", "price": 29, "tier": "Scaler" },
+        { "name": "Neon Scale", "price": 69, "tier": "Scale" },
+        { "name": "Cloudflare Pro", "price": 20, "tier": "Pro" },
+        { "name": "1Password Business", "price": 8, "tier": "Business", "note": "per user" },
+        { "name": "Sentry Team", "price": 26, "tier": "Team" }
+      ]
+    },
+    "streaming_video": {
+      "label": "Streaming (Video)",
+      "icon": "📺",
+      "items": [
+        { "name": "Netflix Premium", "price": 25, "tier": "Premium" },
+        { "name": "Netflix Standard", "price": 18, "tier": "Standard" },
+        { "name": "HBO Max Ultimate", "price": 23, "tier": "Ultimate" },
+        { "name": "Disney+ Premium", "price": 19, "tier": "Premium" },
+        { "name": "Hulu (No Ads)", "price": 18, "tier": "No Ads" },
+        { "name": "Apple TV+", "price": 13, "tier": "Standard" },
+        { "name": "Amazon Prime", "price": 15, "tier": "Standard" },
+        { "name": "Peacock Premium+", "price": 14, "tier": "Premium+" },
+        { "name": "Paramount+", "price": 13, "tier": "Essential" },
+        { "name": "YouTube Premium", "price": 14, "tier": "Premium" }
+      ]
+    },
+    "streaming_music": {
+      "label": "Streaming (Music)",
+      "icon": "🎵",
+      "items": [
+        { "name": "Tidal HiFi Plus", "price": 20, "tier": "HiFi Plus" },
+        { "name": "Spotify Premium", "price": 12, "tier": "Premium" },
+        { "name": "Apple Music", "price": 11, "tier": "Individual" },
+        { "name": "YouTube Music", "price": 14, "tier": "Premium", "note": "with YT Premium" },
+        { "name": "Amazon Music Unlimited", "price": 11, "tier": "Unlimited" },
+        { "name": "Deezer Premium", "price": 12, "tier": "Premium" },
+        { "name": "Audible Premium Plus", "price": 15, "tier": "Premium Plus" }
+      ]
+    },
+    "cloud_storage": {
+      "label": "Cloud Storage",
+      "icon": "☁️",
+      "items": [
+        { "name": "Dropbox Plus", "price": 12, "tier": "Plus", "note": "2TB" },
+        { "name": "Google One", "price": 10, "tier": "2TB" },
+        { "name": "iCloud+", "price": 10, "tier": "2TB" },
+        { "name": "OneDrive", "price": 10, "tier": "1TB" },
+        { "name": "pCloud Premium", "price": 10, "tier": "2TB" },
+        { "name": "MEGA Pro II", "price": 11, "tier": "8TB" }
+      ]
+    },
+    "news_reading": {
+      "label": "News & Reading",
+      "icon": "📰",
+      "items": [
+        { "name": "The Economist", "price": 21, "tier": "Digital" },
+        { "name": "New York Times All Access", "price": 25, "tier": "All Access" },
+        { "name": "Wall Street Journal", "price": 20, "tier": "Digital" },
+        { "name": "The New Yorker", "price": 12, "tier": "Digital" },
+        { "name": "The Atlantic", "price": 10, "tier": "Digital" },
+        { "name": "Washington Post", "price": 10, "tier": "Digital" },
+        { "name": "Financial Times", "price": 40, "tier": "Digital" },
+        { "name": "Bloomberg", "price": 35, "tier": "Digital" },
+        { "name": "Substack (5 writers)", "price": 50, "tier": "Various", "note": "~$10 each" },
+        { "name": "Medium", "price": 5, "tier": "Member" }
+      ]
+    },
+    "fitness_health": {
+      "label": "Fitness & Health",
+      "icon": "💪",
+      "items": [
+        { "name": "Whoop Peak", "price": 50, "tier": "Peak" },
+        { "name": "Whoop Standard", "price": 30, "tier": "Standard" },
+        { "name": "Peloton App+", "price": 29, "tier": "App+" },
+        { "name": "Apple Fitness+", "price": 10, "tier": "Monthly" },
+        { "name": "Strava Premium", "price": 12, "tier": "Premium" },
+        { "name": "Headspace", "price": 13, "tier": "Premium" },
+        { "name": "Calm Premium", "price": 15, "tier": "Premium" },
+        { "name": "Oura Ring", "price": 6, "tier": "Membership" },
+        { "name": "MyFitnessPal Premium", "price": 20, "tier": "Premium" }
+      ]
+    },
+    "vpn_security": {
+      "label": "VPN & Security",
+      "icon": "🔒",
+      "items": [
+        { "name": "ExpressVPN Pro", "price": 20, "tier": "Pro", "note": "monthly rate" },
+        { "name": "NordVPN", "price": 13, "tier": "Monthly" },
+        { "name": "Surfshark", "price": 16, "tier": "Monthly" },
+        { "name": "Bitwarden Premium", "price": 1, "tier": "Premium" },
+        { "name": "Dashlane Premium", "price": 5, "tier": "Premium" },
+        { "name": "ProtonMail Plus", "price": 5, "tier": "Plus" }
+      ]
+    },
+    "communication": {
+      "label": "Communication",
+      "icon": "💬",
+      "items": [
+        { "name": "Zoom Pro", "price": 16, "tier": "Pro" },
+        { "name": "Discord Nitro", "price": 10, "tier": "Nitro" },
+        { "name": "Telegram Premium", "price": 5, "tier": "Premium" },
+        { "name": "Calendly Professional", "price": 15, "tier": "Professional" },
+        { "name": "Krisp Pro", "price": 8, "tier": "Pro" }
+      ]
+    },
+    "learning": {
+      "label": "Learning",
+      "icon": "📚",
+      "items": [
+        { "name": "Brilliant Premium", "price": 25, "tier": "Premium" },
+        { "name": "Coursera Plus", "price": 59, "tier": "Plus" },
+        { "name": "MasterClass", "price": 20, "tier": "Standard" },
+        { "name": "Skillshare Premium", "price": 14, "tier": "Premium" },
+        { "name": "Duolingo Super", "price": 13, "tier": "Super" },
+        { "name": "LinkedIn Learning", "price": 30, "tier": "Individual" },
+        { "name": "Blinkist Premium", "price": 15, "tier": "Premium" }
+      ]
+    },
+    "gaming": {
+      "label": "Gaming",
+      "icon": "🎮",
+      "items": [
+        { "name": "Xbox Game Pass Ultimate", "price": 20, "tier": "Ultimate" },
+        { "name": "PlayStation Plus Premium", "price": 18, "tier": "Premium" },
+        { "name": "Nintendo Switch Online+", "price": 4, "tier": "Individual" },
+        { "name": "EA Play Pro", "price": 15, "tier": "Pro" },
+        { "name": "GeForce NOW Ultimate", "price": 20, "tier": "Ultimate" }
+      ]
+    }
+  },
+  "presets": {
+    "casual_user": {
+      "label": "Casual User",
+      "description": "Basic entertainment and productivity",
+      "items": ["Spotify Premium", "Netflix Standard", "iCloud+", "ChatGPT Plus"]
+    },
+    "ai_curious": {
+      "label": "AI Curious",
+      "description": "Testing the AI waters",
+      "items": ["ChatGPT Plus", "Claude Pro", "Midjourney Standard", "Perplexity Pro"]
+    },
+    "ai_power_user": {
+      "label": "AI Power User",
+      "description": "All-in on AI productivity",
+      "items": ["ChatGPT Pro", "Claude Max", "Cursor Ultra", "Midjourney Pro", "Perplexity Pro", "Runway Pro"]
+    },
+    "indie_dev": {
+      "label": "Indie Developer",
+      "description": "Building apps solo",
+      "items": ["Cursor Pro", "GitHub Copilot Pro", "Vercel Pro", "Supabase Pro", "Linear Business", "Figma Professional"]
+    },
+    "startup_founder": {
+      "label": "Startup Founder",
+      "description": "Running a small team",
+      "items": ["Slack Business+", "Notion Business", "Notion AI", "Figma Organization", "Linear Business", "Vercel Pro", "ChatGPT Plus", "Claude Pro", "Superhuman"]
+    },
+    "content_creator": {
+      "label": "Content Creator",
+      "description": "Making videos and content",
+      "items": ["Adobe Creative Cloud Pro", "Midjourney Pro", "Runway Pro", "ElevenLabs Creator", "Canva Pro", "YouTube Premium"]
+    },
+    "knowledge_worker": {
+      "label": "Knowledge Worker",
+      "description": "Research and writing focused",
+      "items": ["ChatGPT Plus", "Claude Pro", "Perplexity Pro", "Notion Business", "Notion AI", "New York Times All Access", "The Economist", "Superhuman"]
+    },
+    "fitness_enthusiast": {
+      "label": "Fitness Enthusiast",
+      "description": "Optimizing health",
+      "items": ["Whoop Peak", "Peloton App+", "Apple Fitness+", "Strava Premium", "Headspace", "Oura Ring"]
+    },
+    "entertainment_maximalist": {
+      "label": "Entertainment Maximalist",
+      "description": "All the streaming",
+      "items": ["Netflix Premium", "HBO Max Ultimate", "Disney+ Premium", "Hulu (No Ads)", "Apple TV+", "Spotify Premium", "Audible Premium Plus", "YouTube Premium"]
+    }
+  }
+}
