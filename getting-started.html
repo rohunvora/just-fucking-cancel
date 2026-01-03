@@ -866,11 +866,10 @@ function scrollToStep(num) {
   if (step) {
     isScrolling = true;
     updateProgress(num);
-    // Defer scroll to next frame to avoid blocking
-    requestAnimationFrame(() => {
-      step.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(() => { isScrolling = false; }, 800);
-    });
+    // Use scrollTo with calculated position for reliable scrolling
+    const y = step.getBoundingClientRect().top + window.pageYOffset - 80;
+    window.scrollTo({ top: y, behavior: 'smooth' });
+    setTimeout(() => { isScrolling = false; }, 800);
   }
 }
 
