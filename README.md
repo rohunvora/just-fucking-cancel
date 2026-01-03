@@ -34,7 +34,7 @@ The questions aren't a limitation — they're the product. That's when you reali
 
 ```bash
 # 1. Clone this repo
-git clone https://github.com/your-username/just-fucking-cancel.git
+git clone https://github.com/rohunvora/just-fucking-cancel.git
 cd just-fucking-cancel
 
 # 2. Start Claude Code
