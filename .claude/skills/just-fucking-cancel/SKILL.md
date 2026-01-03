@@ -7,6 +7,12 @@ description: Analyze bank transaction CSVs to find recurring charges, categorize
 
 Analyze transactions, categorize subscriptions, generate HTML audit, help cancel.
 
+## Supported Languages
+
+The template supports 6 languages: **English (en), Spanish (es), French (fr), Hindi (hi), Somali (so), German (de)**
+
+The report generates ALL content in ALL 6 languages. Users can switch languages via dropdown without regenerating.
+
 ## Workflow
 
 ### 1. Get Transaction CSV
@@ -35,11 +41,50 @@ Copy [template.html](assets/template.html) and populate:
   - Scope line: "found N subscriptions · N transactions"
   - Breakdown: "Cancelled N · Keeping N"
   - Savings: yearly amount big, monthly in parentheses
-  - Timestamp: current date
+  - Timestamp: current date (formatted for user's language)
 - Add rows to appropriate sections (cancelled/investigate/keep)
 - Include notes from user responses
 
-Row templates in the HTML comments show the structure.
+**Multi-Language Generation (ALL 6 languages):**
+
+Generate every data cell with translations in ALL 6 languages using data attributes:
+
+```html
+<!-- Status cells -->
+<td class="status-cell" 
+    data-en="Cancelled via chat Jan 3" 
+    data-es="Cancelado por chat 3 de enero" 
+    data-fr="Annulé par chat le 3 janvier" 
+    data-hi="चैट द्वारा रद्द 3 जनवरी" 
+    data-so="Laga joojiyay chat Jan 3" 
+    data-de="Per Chat gekündigt 3. Januar">Cancelled via chat Jan 3</td>
+
+<!-- Issue/Reason cells -->
+<td class="note" 
+    data-en="Haven't watched in 47 days" 
+    data-es="Sin ver hace 47 días" 
+    data-fr="Pas regardé depuis 47 jours"
+    data-hi="47 दिनों से नहीं देखा"
+    data-so="47 maalmood ayaan daawin"
+    data-de="Seit 47 Tagen nicht geschaut">Haven't watched in 47 days</td>
+
+<!-- Category headers -->
+<tr class="category-header">
+  <td colspan="3" 
+      data-en="Essential Services" 
+      data-es="Servicios Esenciales" 
+      data-fr="Services Essentiels"
+      data-hi="आवश्यक सेवाएं"
+      data-so="Adeegyada Muhiimka"
+      data-de="Wesentliche Dienste">Essential Services</td>
+</tr>
+```
+
+**Important:**
+- The visible text content should be English (default)
+- Include `data-en`, `data-es`, `data-fr`, `data-hi`, `data-so`, `data-de` attributes on EVERY translatable cell
+- JavaScript automatically swaps content when user changes language dropdown
+- See sample data in template.html for complete examples
 
 ### 5. Cancel Subscriptions
 When user checks items and copies from floating button, they'll paste:
@@ -61,7 +106,8 @@ Features:
 - Floating copy button appears when items checked
 - Privacy toggle blurs service names
 - Collapsible sections via header click
-- Dark mode support
+- Dark/light mode toggle (persists in localStorage)
+- **Multi-language support**: All content generated in 6 languages, switchable via dropdown without regenerating
 
 ## Cancellation Tips
 
