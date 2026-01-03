@@ -1,0 +1,13 @@
+# Ignore legacy static site
+legacy/
+
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+out/
+
+# Misc
+.DS_Store
+*.pem

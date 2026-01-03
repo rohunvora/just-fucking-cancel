@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "destination": "/getting-started.html",
+      "permanent": false
+    }
+  ]
+}
+
