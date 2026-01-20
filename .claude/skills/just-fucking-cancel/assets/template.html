@@ -31,6 +31,31 @@
         --keep: #81c784;
       }
     }
+    /* Manual theme overrides */
+    body.light-mode {
+      --bg: #fff;
+      --text: #222;
+      --muted: #666;
+      --border: #ddd;
+      --accent: #1976d2;
+      --pending: #fff3cd;
+      --pending-border: #ffc107;
+      --cancelled: #e8e8e8;
+      --investigate: #f57c00;
+      --keep: #388e3c;
+    }
+    body.dark-mode {
+      --bg: #1a1a1a;
+      --text: #e0e0e0;
+      --muted: #999;
+      --border: #333;
+      --accent: #64b5f6;
+      --pending: #3d3200;
+      --pending-border: #ffc107;
+      --cancelled: #2a2a2a;
+      --investigate: #ffb74d;
+      --keep: #81c784;
+    }
     body {
       max-width: 900px;
       margin: 40px auto;
@@ -106,10 +131,6 @@
     .section.collapsed .section-header::before {
       transform: rotate(-90deg);
     }
-    .section.collapsed table,
-    .section.collapsed details {
-      display: none;
-    }
     .section-header h2 { margin: 0; font-size: 1.25rem; }
     .section-count {
       margin-left: auto;
@@ -178,9 +199,10 @@
     summary { cursor: pointer; font-weight: 600; }
     summary:hover { color: var(--accent); }
 
-    /* Privacy toggle */
-    .privacy-toggle {
-      margin-left: 1rem;
+    /* Control buttons (privacy, theme) */
+    .privacy-toggle,
+    .theme-toggle {
+      margin-left: 0.5rem;
       padding: 4px 10px;
       font-size: 0.75rem;
       background: var(--border);
@@ -189,7 +211,23 @@
       cursor: pointer;
       color: var(--muted);
     }
-    .privacy-toggle:hover { background: var(--accent); color: white; }
+    .privacy-toggle:hover,
+    .theme-toggle:hover { background: var(--accent); color: white; }
+
+    /* Language selector */
+    .lang-select {
+      margin-left: 0.5rem;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      background: var(--border);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--muted);
+      font-family: system-ui;
+    }
+    .lang-select:hover { background: var(--accent); color: white; }
+    .lang-select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
     body.privacy-mode .service-name {
       filter: blur(5px);
       user-select: none;
@@ -218,114 +256,562 @@
     .floating-copy:hover { opacity: 0.9; }
     .floating-copy.visible { display: block; }
     .floating-copy.copied { background: var(--keep); }
+
+    /* ========== ANIMATIONS ========== */
+    
+    /* Keyframes */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+    }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Entry animations */
+    .animate-fade-in {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+    .animate-fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    .animate-fade-in-down {
+      animation: fadeInDown 0.5s ease-out forwards;
+    }
+    .animate-pulse {
+      animation: pulse 0.6s ease-in-out;
+    }
+
+    /* Staggered delays */
+    .delay-1 { animation-delay: 0.1s; opacity: 0; }
+    .delay-2 { animation-delay: 0.2s; opacity: 0; }
+    .delay-3 { animation-delay: 0.3s; opacity: 0; }
+    .delay-4 { animation-delay: 0.4s; opacity: 0; }
+    .delay-5 { animation-delay: 0.5s; opacity: 0; }
+    .delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+    /* Theme transition - smooth color morphing */
+    body,
+    .share-card,
+    .section,
+    .section-header,
+    .page-meta,
+    table, td, th,
+    .badge,
+    .privacy-toggle,
+    .theme-toggle,
+    .lang-select,
+    .floating-copy {
+      transition: 
+        background-color 0.4s ease,
+        color 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+    }
+
+    /* Section collapse animation */
+    .section-content {
+      max-height: 2000px;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, opacity 0.3s ease;
+    }
+    .section.collapsed .section-content {
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.3s ease-in, opacity 0.2s ease;
+    }
+
+    /* Number animation helper */
+    .counting {
+      display: inline-block;
+      animation: countUp 0.3s ease-out;
+    }
   </style>
 </head>
 <body>
 
 <!-- SHARE CARD - Update after analysis -->
 <div class="share-card">
-  <p class="scope">found N subscriptions · N transactions</p>
-  <p class="breakdown">Cancelled N · Keeping N</p>
-  <h1>just saved $XX,XXX/yr <span>($X,XXX/mo)</span></h1>
-  <p class="timestamp">last run DATE at TIME</p>
+  <p class="scope"><span data-i18n="found">found</span> <span id="sub-count">0</span> <span data-i18n="subscriptions">subscriptions</span> · <span id="tx-count">0</span> <span data-i18n="transactions">transactions</span></p>
+  <p class="breakdown"><span data-i18n="cancelledCount">Cancelled</span> <span id="cancelled-count">0</span> · <span data-i18n="keepingCount">Keeping</span> <span id="keeping-count">0</span></p>
+  <h1><span data-i18n="justSaved">just saved</span> $<span id="yearly-savings">0</span>/<span data-i18n="yr">yr</span> <span>($<span id="monthly-savings">0</span>/<span data-i18n="mo">mo</span>)</span></h1>
+  <p class="timestamp"><span data-i18n="lastRun">last run</span> <span id="run-date">—</span> <span data-i18n="at">at</span> <span id="run-time">—</span></p>
 </div>
 
 <p class="page-meta">
-  Subscription audit
-  <button class="privacy-toggle" onclick="togglePrivacy()">Hide names</button>
+  <span data-i18n="audit">Subscription audit</span>
+  <button class="theme-toggle" onclick="toggleTheme()" data-i18n="lightMode">Light mode</button>
+  <select class="lang-select" onchange="setLang(this.value)">
+    <option value="en" selected>English</option>
+    <option value="es">Español</option>
+    <option value="fr">Français</option>
+    <option value="hi">हिन्दी</option>
+    <option value="so">Soomaali</option>
+    <option value="de">Deutsch</option>
+  </select>
+  <button class="privacy-toggle" onclick="togglePrivacy()" data-i18n="hideNames">Hide names</button>
 </p>
 
 <!-- CANCELLED - Done, strikethrough -->
 <div class="section" id="section-cancelled">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-    <span class="badge badge-cancelled">Done</span>
-    <h2>Cancel</h2>
+  <div class="section-header" onclick="toggleSection(this.parentElement)">
+    <span class="badge badge-cancelled" data-i18n="done">Done</span>
+    <h2 data-i18n="cancel">Cancel</h2>
     <span class="section-count" data-section="cancelled"></span>
   </div>
+  <div class="section-content">
   <table>
     <tr>
       <th style="width:30px"></th>
-      <th>Service</th>
-      <th>Monthly</th>
-      <th>Status</th>
+      <th data-i18n="service">Service</th>
+      <th data-i18n="monthly">Monthly</th>
+      <th data-i18n="status">Status</th>
     </tr>
-    <!-- TEMPLATE: Cancelled items
+    <!-- Claude generates rows like this (with all 6 language translations):
     <tr class="cancelled" data-status="cancelled">
       <td>✓</td>
       <td><strong class="service-name">Service Name</strong></td>
-      <td class="amount">$XX</td>
-      <td class="status-cell">Cancelled DATE</td>
+      <td class="amount">$X.XX</td>
+      <td class="status-cell" data-en="Cancelled via chat Jan 3" data-es="Cancelado por chat 3 de enero" data-fr="Annulé par chat le 3 janvier" data-hi="चैट द्वारा रद्द 3 जनवरी" data-so="Laga joojiyay chat Jan 3" data-de="Per Chat gekündigt 3. Januar">Cancelled via chat Jan 3</td>
     </tr>
     -->
   </table>
+  </div>
 </div>
 
 <!-- INVESTIGATE - Needs decision -->
 <div class="section" id="section-investigate">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-    <span class="badge badge-investigate">Decide</span>
-    <h2>Needs Decision</h2>
+  <div class="section-header" onclick="toggleSection(this.parentElement)">
+    <span class="badge badge-investigate" data-i18n="decide">Decide</span>
+    <h2 data-i18n="needsDecision">Needs Decision</h2>
     <span class="section-count" data-section="investigate"></span>
   </div>
+  <div class="section-content">
   <table>
     <tr>
-      <th class="checkbox">Cancel?</th>
-      <th>Service</th>
-      <th>Monthly</th>
-      <th>Issue</th>
+      <th class="checkbox" data-i18n="cancelQ">Cancel?</th>
+      <th data-i18n="service">Service</th>
+      <th data-i18n="monthly">Monthly</th>
+      <th data-i18n="issue">Issue</th>
     </tr>
-    <!-- TEMPLATE: Items needing decision
+    <!-- Claude generates rows like this (with all 6 language translations):
     <tr class="investigate" data-status="investigate">
       <td class="checkbox"><input type="checkbox"></td>
       <td><strong class="service-name">Service Name</strong></td>
-      <td class="amount">$XX</td>
-      <td class="note">Why this needs review</td>
+      <td class="amount">$X.XX</td>
+      <td class="note" data-en="Issue description" data-es="Descripción del problema" data-fr="Description du problème" data-hi="समस्या विवरण" data-so="Sharaxaadda dhibaatada" data-de="Problembeschreibung">Issue description</td>
     </tr>
     -->
   </table>
+  </div>
 </div>
 
 <!-- KEEPING - No checkbox needed -->
 <div class="section" id="section-keep">
-  <div class="section-header" onclick="this.parentElement.classList.toggle('collapsed')">
-    <span class="badge badge-keep">Keep</span>
-    <h2>Keeping</h2>
+  <div class="section-header" onclick="toggleSection(this.parentElement)">
+    <span class="badge badge-keep" data-i18n="keep">Keep</span>
+    <h2 data-i18n="keeping">Keeping</h2>
     <span class="section-count" data-section="keep"></span>
   </div>
+  <div class="section-content">
   <table>
     <tr>
-      <th>Service</th>
-      <th>Monthly</th>
-      <th>Reason</th>
+      <th data-i18n="service">Service</th>
+      <th data-i18n="monthly">Monthly</th>
+      <th data-i18n="reason">Reason</th>
     </tr>
-    <!-- TEMPLATE: Category header (optional)
-    <tr class="category-header"><td colspan="3">Category Name</td></tr>
-    -->
-    <!-- TEMPLATE: Keep items
+    <!-- Claude generates rows like this (with all 6 language translations):
+    <tr class="category-header"><td colspan="3" data-en="Category Name" data-es="Nombre de Categoría" data-fr="Nom de Catégorie" data-hi="श्रेणी नाम" data-so="Magaca Qaybta" data-de="Kategoriename">Category Name</td></tr>
     <tr class="keep" data-status="keep">
       <td><strong class="service-name">Service Name</strong></td>
-      <td class="amount">$XX</td>
-      <td class="note">Why keeping</td>
+      <td class="amount">$X.XX</td>
+      <td class="note" data-en="Reason to keep" data-es="Razón para mantener" data-fr="Raison de garder" data-hi="रखने का कारण" data-so="Sababta loo haysto" data-de="Grund zum Behalten">Reason to keep</td>
     </tr>
     -->
   </table>
+  </div>
 </div>
 
 <!-- Floating copy button -->
-<button class="floating-copy" onclick="copyChecked()">Copy selected</button>
+<button class="floating-copy" onclick="copyChecked()" data-i18n="copySelected">Copy selected</button>
 
 <script>
+// ========== ANIMATIONS ==========
+
+// Animate number counting from 0 to target
+function animateValue(element, start, end, duration) {
+  const startTime = performance.now();
+  const isFormatted = end.toString().includes(',');
+  const numericEnd = parseInt(end.toString().replace(/,/g, ''));
+  
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // Ease out cubic
+    const easeOut = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(start + (numericEnd - start) * easeOut);
+    
+    element.textContent = isFormatted ? current.toLocaleString() : current;
+    element.classList.add('counting');
+    
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      element.classList.remove('counting');
+    }
+  }
+  requestAnimationFrame(update);
+}
+
+// Toggle section collapse with animation
+function toggleSection(section) {
+  section.classList.toggle('collapsed');
+}
+
+// Initialize all animations on page load
+function initAnimations() {
+  // Animate numbers
+  const numbersToAnimate = [
+    { id: 'sub-count', duration: 1200 },
+    { id: 'tx-count', duration: 1500 },
+    { id: 'cancelled-count', duration: 1000 },
+    { id: 'keeping-count', duration: 1000 },
+    { id: 'yearly-savings', duration: 1800 },
+    { id: 'monthly-savings', duration: 1400 }
+  ];
+  
+  numbersToAnimate.forEach(({ id, duration }) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const target = el.textContent;
+      el.textContent = '0';
+      setTimeout(() => animateValue(el, 0, target, duration), 300);
+    }
+  });
+  
+  // Add entry animation classes with stagger
+  const shareCard = document.querySelector('.share-card');
+  const pageMeta = document.querySelector('.page-meta');
+  const sections = document.querySelectorAll('.section');
+  
+  if (shareCard) {
+    shareCard.classList.add('animate-fade-in-up');
+  }
+  if (pageMeta) {
+    pageMeta.classList.add('animate-fade-in', 'delay-2');
+  }
+  sections.forEach((section, index) => {
+    section.classList.add('animate-fade-in-up', `delay-${index + 3}`);
+  });
+}
+
+// Run animations when DOM is ready
+document.addEventListener('DOMContentLoaded', initAnimations);
+
+// ========== TRANSLATIONS ==========
+
+// Translations for 6 languages
+const translations = {
+  en: {
+    audit: 'Subscription audit',
+    cancel: 'Cancel',
+    needsDecision: 'Needs Decision',
+    keeping: 'Keeping',
+    done: 'Done',
+    decide: 'Decide',
+    keep: 'Keep',
+    service: 'Service',
+    monthly: 'Monthly',
+    status: 'Status',
+    issue: 'Issue',
+    reason: 'Reason',
+    cancelQ: 'Cancel?',
+    hideNames: 'Hide names',
+    showNames: 'Show names',
+    copySelected: 'Copy selected',
+    copied: 'Copied!',
+    items: 'items',
+    darkMode: 'Dark mode',
+    lightMode: 'Light mode',
+    found: 'found',
+    subscriptions: 'subscriptions',
+    transactions: 'transactions',
+    cancelledCount: 'Cancelled',
+    keepingCount: 'Keeping',
+    justSaved: 'just saved',
+    yr: 'yr',
+    mo: 'mo',
+    lastRun: 'last run',
+    at: 'at'
+  },
+  es: {
+    audit: 'Auditoría de suscripciones',
+    cancel: 'Cancelar',
+    needsDecision: 'Necesita decisión',
+    keeping: 'Mantener',
+    done: 'Hecho',
+    decide: 'Decidir',
+    keep: 'Mantener',
+    service: 'Servicio',
+    monthly: 'Mensual',
+    status: 'Estado',
+    issue: 'Problema',
+    reason: 'Razón',
+    cancelQ: '¿Cancelar?',
+    hideNames: 'Ocultar nombres',
+    showNames: 'Mostrar nombres',
+    copySelected: 'Copiar seleccionados',
+    copied: '¡Copiado!',
+    items: 'elementos',
+    darkMode: 'Modo oscuro',
+    lightMode: 'Modo claro',
+    found: 'encontradas',
+    subscriptions: 'suscripciones',
+    transactions: 'transacciones',
+    cancelledCount: 'Canceladas',
+    keepingCount: 'Conservando',
+    justSaved: 'ahorro de',
+    yr: 'año',
+    mo: 'mes',
+    lastRun: 'última ejecución',
+    at: 'a las'
+  },
+  fr: {
+    audit: 'Audit des abonnements',
+    cancel: 'Annuler',
+    needsDecision: 'À décider',
+    keeping: 'Conserver',
+    done: 'Terminé',
+    decide: 'Décider',
+    keep: 'Garder',
+    service: 'Service',
+    monthly: 'Mensuel',
+    status: 'Statut',
+    issue: 'Problème',
+    reason: 'Raison',
+    cancelQ: 'Annuler?',
+    hideNames: 'Masquer les noms',
+    showNames: 'Afficher les noms',
+    copySelected: 'Copier la sélection',
+    copied: 'Copié!',
+    items: 'éléments',
+    darkMode: 'Mode sombre',
+    lightMode: 'Mode clair',
+    found: 'trouvé',
+    subscriptions: 'abonnements',
+    transactions: 'transactions',
+    cancelledCount: 'Annulés',
+    keepingCount: 'Conservés',
+    justSaved: 'économisé',
+    yr: 'an',
+    mo: 'mois',
+    lastRun: 'dernière exécution',
+    at: 'à'
+  },
+  hi: {
+    audit: 'सदस्यता ऑडिट',
+    cancel: 'रद्द करें',
+    needsDecision: 'निर्णय आवश्यक',
+    keeping: 'रखना',
+    done: 'पूर्ण',
+    decide: 'निर्णय लें',
+    keep: 'रखें',
+    service: 'सेवा',
+    monthly: 'मासिक',
+    status: 'स्थिति',
+    issue: 'समस्या',
+    reason: 'कारण',
+    cancelQ: 'रद्द करें?',
+    hideNames: 'नाम छुपाएं',
+    showNames: 'नाम दिखाएं',
+    copySelected: 'चयनित कॉपी करें',
+    copied: 'कॉपी किया!',
+    items: 'आइटम',
+    darkMode: 'डार्क मोड',
+    lightMode: 'लाइट मोड',
+    found: 'पाया',
+    subscriptions: 'सदस्यताएं',
+    transactions: 'लेनदेन',
+    cancelledCount: 'रद्द',
+    keepingCount: 'रखे हुए',
+    justSaved: 'बचत',
+    yr: 'वर्ष',
+    mo: 'माह',
+    lastRun: 'अंतिम रन',
+    at: 'पर'
+  },
+  so: {
+    audit: 'Baaritaanka rukunka',
+    cancel: 'Jooji',
+    needsDecision: 'Go\'aan loo baahan yahay',
+    keeping: 'La hayso',
+    done: 'La dhameeyay',
+    decide: 'Go\'aanso',
+    keep: 'Hay',
+    service: 'Adeeg',
+    monthly: 'Bishii',
+    status: 'Xaalad',
+    issue: 'Arrin',
+    reason: 'Sabab',
+    cancelQ: 'Jooji?',
+    hideNames: 'Qari magacyada',
+    showNames: 'Tus magacyada',
+    copySelected: 'Koobiyee la doortay',
+    copied: 'La koobiyeeyay!',
+    items: 'shay',
+    darkMode: 'Habeen',
+    lightMode: 'Maalin',
+    found: 'la helay',
+    subscriptions: 'rukunno',
+    transactions: 'macaamilad',
+    cancelledCount: 'La joojiyay',
+    keepingCount: 'La haysto',
+    justSaved: 'waxa la badbaadiyay',
+    yr: 'sn',
+    mo: 'bi',
+    lastRun: 'markii ugu dambeysay',
+    at: 'markay'
+  },
+  de: {
+    audit: 'Abonnement-Prüfung',
+    cancel: 'Stornieren',
+    needsDecision: 'Entscheidung nötig',
+    keeping: 'Behalten',
+    done: 'Erledigt',
+    decide: 'Entscheiden',
+    keep: 'Behalten',
+    service: 'Dienst',
+    monthly: 'Monatlich',
+    status: 'Status',
+    issue: 'Problem',
+    reason: 'Grund',
+    cancelQ: 'Stornieren?',
+    hideNames: 'Namen ausblenden',
+    showNames: 'Namen anzeigen',
+    copySelected: 'Ausgewählte kopieren',
+    copied: 'Kopiert!',
+    items: 'Elemente',
+    darkMode: 'Dunkelmodus',
+    lightMode: 'Hellmodus',
+    found: 'gefunden',
+    subscriptions: 'Abonnements',
+    transactions: 'Transaktionen',
+    cancelledCount: 'Storniert',
+    keepingCount: 'Behalten',
+    justSaved: 'gespart',
+    yr: 'Jahr',
+    mo: 'Mon',
+    lastRun: 'letzter Durchlauf',
+    at: 'um'
+  }
+};
+
+let currentLang = localStorage.getItem('lang') || 'en';
+
+// Theme toggle
+function toggleTheme() {
+  const body = document.body;
+  const btn = document.querySelector('.theme-toggle');
+  const isDark = body.classList.contains('dark-mode') || 
+    (!body.classList.contains('light-mode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+  
+  if (isDark) {
+    body.classList.remove('dark-mode');
+    body.classList.add('light-mode');
+    localStorage.setItem('theme', 'light');
+    btn.setAttribute('data-i18n', 'darkMode');
+    btn.textContent = translations[currentLang].darkMode;
+  } else {
+    body.classList.remove('light-mode');
+    body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+    btn.setAttribute('data-i18n', 'lightMode');
+    btn.textContent = translations[currentLang].lightMode;
+  }
+}
+
+// Initialize theme from localStorage
+function initTheme() {
+  const saved = localStorage.getItem('theme');
+  const btn = document.querySelector('.theme-toggle');
+  if (saved === 'dark') {
+    document.body.classList.add('dark-mode');
+    btn.setAttribute('data-i18n', 'lightMode');
+    btn.textContent = translations[currentLang].lightMode;
+  } else if (saved === 'light') {
+    document.body.classList.add('light-mode');
+    btn.setAttribute('data-i18n', 'darkMode');
+    btn.textContent = translations[currentLang].darkMode;
+  } else {
+    // Follow system preference
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    btn.setAttribute('data-i18n', isDark ? 'lightMode' : 'darkMode');
+    btn.textContent = isDark ? translations[currentLang].lightMode : translations[currentLang].darkMode;
+  }
+}
+
+// Language selector
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('lang', lang);
+  // Update UI labels
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (translations[lang][key]) {
+      el.textContent = translations[lang][key];
+    }
+  });
+  // Update data cells with multilingual content (data-en, data-es, etc.)
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const text = el.getAttribute('data-' + lang) || el.getAttribute('data-en');
+    el.textContent = text;
+  });
+  // Update dynamic text
+  updateCounts();
+  updateFloatingButton();
+  // Update privacy button based on current state
+  const privacyBtn = document.querySelector('.privacy-toggle');
+  privacyBtn.textContent = document.body.classList.contains('privacy-mode') 
+    ? translations[lang].showNames 
+    : translations[lang].hideNames;
+}
+
+// Initialize language from localStorage or HTML default
+function initLang() {
+  const saved = localStorage.getItem('lang');
+  const htmlDefault = document.querySelector('.lang-select').value; // Gets the selected option
+  const lang = saved || htmlDefault || 'en';
+  currentLang = lang;
+  document.querySelector('.lang-select').value = lang;
+  setLang(lang);
+}
+
 function togglePrivacy() {
   document.body.classList.toggle('privacy-mode');
   const btn = document.querySelector('.privacy-toggle');
-  btn.textContent = document.body.classList.contains('privacy-mode') ? 'Show names' : 'Hide names';
+  btn.textContent = document.body.classList.contains('privacy-mode') 
+    ? translations[currentLang].showNames 
+    : translations[currentLang].hideNames;
 }
 
 function updateCounts() {
   document.querySelectorAll('[data-section]').forEach(el => {
     const section = el.dataset.section;
     const count = document.querySelectorAll(`[data-status="${section}"]`).length;
-    el.textContent = count > 0 ? `${count} items` : '';
+    el.textContent = count > 0 ? `${count} ${translations[currentLang].items}` : '';
   });
 }
 
@@ -333,7 +819,8 @@ function updateFloatingButton() {
   const checked = document.querySelectorAll('input[type="checkbox"]:checked');
   const btn = document.querySelector('.floating-copy');
   btn.classList.toggle('visible', checked.length > 0);
-  btn.textContent = checked.length > 0 ? `Copy ${checked.length} selected` : 'Copy selected';
+  const baseText = translations[currentLang].copySelected;
+  btn.textContent = checked.length > 0 ? `${baseText} (${checked.length})` : baseText;
 }
 
 function copyChecked() {
@@ -346,11 +833,11 @@ function copyChecked() {
     if (name) items.push(`${name} (${amount})`);
   });
 
-  const text = `Cancel these: ${items.join(', ')}`;
+  const text = `${translations[currentLang].cancel}: ${items.join(', ')}`;
   navigator.clipboard.writeText(text).then(() => {
     const btn = document.querySelector('.floating-copy');
     btn.classList.add('copied');
-    btn.textContent = 'Copied!';
+    btn.textContent = translations[currentLang].copied;
     setTimeout(() => {
       btn.classList.remove('copied');
       updateFloatingButton();
@@ -382,9 +869,13 @@ function hideEmptySections() {
   });
 }
 
+// Initialize on load
+initTheme();
+initLang();
 updateCounts();
 updateFloatingButton();
 hideEmptySections();
 </script>
 </body>
 </html>
+
