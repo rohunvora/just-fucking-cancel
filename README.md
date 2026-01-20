@@ -104,6 +104,10 @@ The only data that reaches Anthropic is your conversation with Claude — not yo
 
 One month of Claude Pro is usually enough to clean up years of subscription bloat. Then cancel Claude Pro too, if you want. (It won't try to stop you.)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=rohunvora/just-fucking-cancel&type=Date)](https://star-history.com/#rohunvora/just-fucking-cancel&Date)
+
 ---
 
 **Questions?** Open an issue. **New to Claude Code?** [Start here](GETTING_STARTED.md).
